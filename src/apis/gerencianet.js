@@ -31,7 +31,6 @@ const authenticate = ({ clientID, clientSecret }) => {
   });
 };
 
-
 const GNRequest = async (credentials) => {
   const authResponse = await authenticate(credentials);
   const accessToken = authResponse.data?.access_token;

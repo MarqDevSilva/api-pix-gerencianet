@@ -18,7 +18,7 @@ const reqGNAlready = GNRequest({
   clientSecret: process.env.GN_CLIENT_SECRET
 });
 
-app.get('/pix', async (req, res) => {
+app.get('/', async (req, res) => {
   const reqGN = await reqGNAlready;
   const dataCob = {
     calendario: {
@@ -37,16 +37,6 @@ app.get('/pix', async (req, res) => {
   res.render('qrcode', { qrcodeImage: qrcodeResponse.data.imagemQrcode })
 });
 
-app.get('/consulta'), async(req, res) => {
-
-  console.log(req.body)
-
-  //const reqGN = await reqGNAlready;
-
-  //const conResponse = await reqGN.get(`/v2/pix/${req.body}`)
-
-  //res.send(conResponse.data);
-}
 
 app.get('/cobrancas', async(req, res) => {
   const reqGN = await reqGNAlready;
@@ -56,10 +46,10 @@ app.get('/cobrancas', async(req, res) => {
   res.send(cobResponse.data);
 });
 
-//app.post('/webhook(/pix)?', (req, res) => {
-//  console.log(req.body);
-//  res.send('200');
-//});
+app.post('/webhook(/pix)?', (req, res) => {
+  console.log(req.body);
+  res.send('200');
+});
 
 app.listen(8000, () => {
   console.log('running');

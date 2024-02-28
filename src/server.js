@@ -59,7 +59,7 @@ app.get('/pix', async (req, res) => {
       original: valor
     },
     chave: '73931733-92c6-4c8d-9628-0786a478d826',
-    solicitacaoPagador: 'Inscrição Congreço GYC'
+    solicitacaoPagador: 'Inscrição Congresso GYC'
   };
   
   const cobResponse = await reqGN.post('/v2/cob', dataCob);

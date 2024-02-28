@@ -18,7 +18,7 @@ const reqGNAlready = GNRequest({
   clientSecret: process.env.GN_CLIENT_SECRET
 });
 
-app.get('/', async (req, res) => {
+app.get('/pix', async (req, res) => {
   const reqGN = await reqGNAlready;
   const dataCob = {
     calendario: {

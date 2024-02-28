@@ -18,6 +18,36 @@ const reqGNAlready = GNRequest({
   clientSecret: process.env.GN_CLIENT_SECRET
 });
 
+const clients = [];
+
+function handlePixWebhook(data) {
+  clients.forEach(client => {
+      console.log(client)
+      client.write(`data: ${JSON.stringify(data)}\n\n`);
+  });
+}
+
+app.get('/sse', (req, res) => {
+  res.writeHead(200, {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      'Connection': 'keep-alive'
+  });
+
+  const clientIndex = clients.push(res) - 1;
+
+  const timeoutId = setTimeout(() => {
+    clients.splice(clientIndex, 1);
+    res.end();
+  }, 60000);
+
+  req.on('close', () => {
+      clearTimeout(timeoutId);
+      clients.splice(clientIndex, 1);
+  });
+});
+
+
 app.get('/pix', async (req, res) => {
   const reqGN = await reqGNAlready;
   const valor = req.query.valor;
@@ -49,6 +79,9 @@ app.get('/cobrancas', async(req, res) => {
 
 app.post('/webhook(/pix)?', (req, res) => {
   console.log(req.body);
+
+  handlePixWebhook(req.body);
+
   res.send('200');
 });
 

@@ -31,8 +31,6 @@ app.get('/pix', async (req, res) => {
     chave: '73931733-92c6-4c8d-9628-0786a478d826',
     solicitacaoPagador: 'Inscrição Congreço GYC'
   };
-
-  console.log("Valor", valor)
   
   const cobResponse = await reqGN.post('/v2/cob', dataCob);
   const qrcodeResponse = await reqGN.get(`/v2/loc/${cobResponse.data.loc.id}/qrcode`);

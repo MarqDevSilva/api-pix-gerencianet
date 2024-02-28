@@ -65,7 +65,10 @@ app.get('/pix', async (req, res) => {
   const cobResponse = await reqGN.post('/v2/cob', dataCob);
   const qrcodeResponse = await reqGN.get(`/v2/loc/${cobResponse.data.loc.id}/qrcode`);
 
-  res.status(200).json(qrcodeResponse.data);
+  res.status(200).json({
+    cobResponse: cobResponse.data,
+    qrcodeResponse: qrcodeResponse.data
+  });
 });
 
 

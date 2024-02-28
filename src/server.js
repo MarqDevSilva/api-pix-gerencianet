@@ -39,7 +39,7 @@ app.get('/sse', (req, res) => {
   const timeoutId = setTimeout(() => {
     clients.splice(clientIndex, 1);
     res.end();
-  }, 60000);
+  }, 300000);
 
   req.on('close', () => {
       clearTimeout(timeoutId);

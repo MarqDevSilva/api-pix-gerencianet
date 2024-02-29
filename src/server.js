@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 app.set('view engine', 'ejs');
 app.set('views', 'src/views');
 
-const reqGNAlready = GNRequest({
+let reqGNAlready = GNRequest({
   clientID: process.env.GN_CLIENT_ID,
   clientSecret: process.env.GN_CLIENT_SECRET
 });

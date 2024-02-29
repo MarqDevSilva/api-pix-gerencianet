@@ -18,6 +18,15 @@ const reqGNAlready = GNRequest({
   clientSecret: process.env.GN_CLIENT_SECRET
 });
 
+async function restartReqGN() {
+  reqGNAlready = await GNRequest({
+    clientID: process.env.GN_CLIENT_ID,
+    clientSecret: process.env.GN_CLIENT_SECRET
+  });
+}
+
+setInterval(restartReqGN, 5000);
+
 const clients = [];
 
 function handlePixWebhook(data) {

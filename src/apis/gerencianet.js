@@ -13,6 +13,8 @@ const agent = new https.Agent({
 });
 
 const authenticate = ({ clientID, clientSecret }) => {
+  console.log('Gerando TOKEN')
+  
   const credentials = Buffer.from(
     `${clientID}:${clientSecret}`
   ).toString('base64');
@@ -31,10 +33,10 @@ const authenticate = ({ clientID, clientSecret }) => {
   });
 };
 
-const GNRequest = async (credentials) => {
+const GNRequest = async (credentials) => { 
   const authResponse = await authenticate(credentials);
   const accessToken = authResponse.data?.access_token;
-
+  console.log('accesToken')
   return axios.create({
     baseURL: process.env.GN_ENDPOINT,
     httpsAgent: agent,

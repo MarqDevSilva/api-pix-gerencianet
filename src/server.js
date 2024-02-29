@@ -25,7 +25,7 @@ async function restartReqGN() {
   });
 }
 
-setInterval(restartReqGN, 5000);
+setInterval(restartReqGN, 3600000);
 
 const clients = [];
 

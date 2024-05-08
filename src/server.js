@@ -67,28 +67,17 @@ app.get('/pix', async (req, res) => {
     valor: {
       original: valor
     },
-    chave: '73931733-92c6-4c8d-9628-0786a478d826',
+    chave: 'e6ada153-6d47-4e8d-a3a8-96dbde7ed7e3',
     solicitacaoPagador: 'Inscrição Congresso GYC'
   };
   
   const cobResponse = await reqGN.post('/v2/cob', dataCob);
   const qrcodeResponse = await reqGN.get(`/v2/loc/${cobResponse.data.loc.id}/qrcode`);
 
-  console.log("GerouCobrança")
-
   res.status(200).json({
     cobResponse: cobResponse.data,
     qrcodeResponse: qrcodeResponse.data
   });
-});
-
-
-app.get('/cobrancas', async(req, res) => {
-  const reqGN = await reqGNAlready;
-
-  const cobResponse = await reqGN.get('/v2/pix?inicio=2021-02-15T16:01:35Z&fim=2021-02-22T23:59:00Z');
-
-  res.send(cobResponse.data);
 });
 
 app.post('/webhook(/pix)?', (req, res) => {
@@ -98,6 +87,8 @@ app.post('/webhook(/pix)?', (req, res) => {
 
   res.send('200');
 });
+
+app.post('')
 
 app.listen(8000, () => {
   console.log('running');

@@ -37,22 +37,29 @@ function handlePixWebhook(data) {
 }
 
 app.get('/sse', (req, res) => {
+  // Configura os cabeçalhos da resposta SSE
   res.writeHead(200, {
-      'Content-Type': 'text/event-stream',
-      'Cache-Control': 'no-cache',
-      'Connection': 'keep-alive'
+    'Content-Type': 'text/event-stream',
+    'Cache-Control': 'no-cache',
+    'Connection': 'keep-alive',
+    'X-Accel-Buffering': 'no'
   });
 
+  // Função para enviar um ping para o cliente a cada 40 segundos
+  const sendPing = () => {
+    res.write(': ping\n\n');
+  };
+
+  // Chama a função sendPing inicialmente e a cada 40 segundos
+  const pingInterval = setInterval(sendPing, 40000);
+
+  // Registra o cliente na lista
   const clientIndex = clients.push(res) - 1;
 
-  const timeoutId = setTimeout(() => {
-    clients.splice(clientIndex, 1);
-    res.end();
-  }, 300000);
-
+  // Limpa o intervalo e remove o cliente da lista quando a conexão é fechada pelo cliente
   req.on('close', () => {
-      clearTimeout(timeoutId);
-      clients.splice(clientIndex, 1);
+    clearInterval(pingInterval);
+    clients.splice(clientIndex, 1);
   });
 });
 
@@ -87,8 +94,6 @@ app.post('/webhook(/pix)?', (req, res) => {
 
   res.send('200');
 });
-
-app.post('')
 
 app.listen(8000, () => {
   console.log('running');
